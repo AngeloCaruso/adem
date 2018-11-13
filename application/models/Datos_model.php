@@ -28,6 +28,7 @@ class Datos_model extends CI_Model{
             $this->db->where('datos.id>',$id);
         }
         $this->db->limit($limit);
+        $this->db->order_by('fecha', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }

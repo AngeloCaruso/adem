@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 	<!-- CSS Files -->
 	<link href="./assets/material-dashboard/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+	<link href="./assets/dateTimePicker/datetime.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="./assets/styles.css">
 	<title>Dashboard</title>
 </head>
@@ -143,11 +144,15 @@
 	<script src="./assets/material-dashboard/assets/js/core/popper.min.js" type="text/javascript"></script>
 	<script src="./assets/material-dashboard/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
 	<script src="./assets/material-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="./assets/material-kit/assets/js/plugins/moment.min.js"></script>
+	<script src="./assets/material-kit/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
 	<!--  Notifications Plugin    -->
 	<script src="./assets/material-dashboard/assets/js/plugins/bootstrap-notify.js"></script>
 	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 	<script src="./assets/material-dashboard/assets/js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" type="text/javascript"></script>
+	<script src="./assets/dateTimePicker/datetime.min.js"></script>
+	<script src="./assets/dateTimePicker/datetime.es.js"></script>
 	<script src="./assets/scripts.js" type="text/javascript"></script>
 </body>
 

@@ -1,3 +1,12 @@
 .err{
-    color: #f44336
+    color: #f44336;
+}
+.datepicker--day-name{
+    color: #00acc1;
+}
+.btnFiltrar{
+    width: 100%;
+}
+#datePicker{
+    width: 100%;
 }

@@ -1,5 +1,5 @@
 function cargarDetalleDisp(id) {
-
+	$('.content').load('dashboard/loadDisp/'+id)
 }
 
 $(function () {
@@ -98,7 +98,7 @@ $(function () {
 
 	if ($('body').attr('id') == 'bDashboard') {
 		//cargarDisp()
-		var test = setInterval(updateCharts, 2000)
+		//var test = setInterval(updateCharts, 4000)
 	}
 
 	function cargarDisp() {
@@ -191,32 +191,33 @@ $(function () {
 						y: d.vatios
 					}
 					data.push(newData)
-					lastData[id]= d.id
 				})
+				lastData[id] = res[0].id
 				chart.data.datasets[0].data = data
 				chart.update()
 			}
 		});
 	}
+
 	function updateData(chart) {
 		let serial = chart.canvas.id
 		let lastId = lastData[serial]
 		$.ajax({
 			type: "get",
 			url: "dashboard/datos",
-			data:{
+			data: {
 				serial: serial,
 				id: lastId
 			},
 			success: function (res) {
 				let actualDatasetsArray = chart.data.datasets[0].data
-				JSON.parse(res).map(d => {
+				JSON.parse(res).reverse().map(d => {
 					let newData = {
 						x: new Date(d.fecha),
 						y: d.vatios
 					}
-					arrayBuffer(actualDatasetsArray,newData)
-					lastData[serial]= d.id
+					arrayBuffer(actualDatasetsArray, newData)
+					lastData[serial] = d.id
 				})
 				console.log(lastData[serial])
 			}
@@ -224,7 +225,7 @@ $(function () {
 	}
 
 	function arrayBuffer(array, newData) {
-		if (array.length == 15) {
+		if (array.length == 10) {
 			array.shift()
 			array.push(newData)
 		} else {

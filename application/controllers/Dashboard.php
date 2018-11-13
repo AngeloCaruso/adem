@@ -87,14 +87,11 @@ class Dashboard extends CI_Controller {
 			}
 		}
 	}
+	public function loadDisp($id){
+		$this->load->view('dashboardViews/detailDisp', array('name' => $id));
+	}
 	
 	public function showAllDisp(){
-		/*$dispList=json_decode($this->dispositivos(), true);
-		echo $dispList;
-		foreach ($dispList as $key => $value) {
-			print_r($key);
-			print_r($value);
-		}*/
 		$this->load->view('dashboardViews/allDisp');
 	}
 
