@@ -63,9 +63,10 @@ class Dispositivo_model extends CI_Model{
     //Fin Solo Admin
 
     //Usuario Comun
-    public function agregar_uc($id_usuario, $serial, $nombre, $descripcion){
+    public function agregar_uc($id_usuario, $serial, $tipoDisp, $nombre, $descripcion){
         $this->db->set('usuario_id', $id_usuario);
         $this->db->set('nombre', $nombre);
+        $this->db->set('tipo_disp', $tipoDisp);
         $this->db->set('descripcion', $descripcion);
         $this->db->where('serial', $serial);
         return $this->db->update('dispositivos');
@@ -73,7 +74,7 @@ class Dispositivo_model extends CI_Model{
 
     public function todos_dispositivos_uc($id){
         $this->db->where("usuario_id", $id);
-        $this->db->select('serial, nombre, descripcion');
+        $this->db->select('serial, nombre, tipo_disp, descripcion');
         $query = $this->db->get("dispositivos");
         return $query->result();
     }
@@ -84,10 +85,11 @@ class Dispositivo_model extends CI_Model{
         $this->db->update('dispositivos');
     }
     
-    public function editar_uc($id, $nombre, $descripcion){
+    public function editar_uc($id, $nombre, $tipo, $descripcion){
         $this->db->set('nombre', $nombre);
         $this->db->set('descripcion', $descripcion);
-        $this->db->where('id', $id);
+        $this->db->set('tipo_disp', $tipo);
+        $this->db->where('serial', $id);
         $this->db->update('dispositivos');
     }
 

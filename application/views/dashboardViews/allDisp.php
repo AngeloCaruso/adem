@@ -3,7 +3,7 @@
 		<div class="row dispContainer"></div>
 		<div class="row">
 			<div class="col text-center">
-				<button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar dispositivo</button>
+				<button class="btn btn-lg btn-warning" data-toggle="modal" data-target="#exampleModal">Agregar dispositivo</button>
 			</div>
 		</div>
 	</div>
@@ -46,11 +46,11 @@
 					</div>
 					<div class="input-group">
 						<select class="form-control" id="selectDevice">
-							<option value="">Aire acondicionado</option>
-							<option value="">Nevera</option>
-							<option value="">Televisor</option>
-							<option value="">Lavadora</option>
-							<option value="">Otro</option>
+							<option>Aire acondicionado</option>
+							<option>Nevera</option>
+							<option>Televisor</option>
+							<option>Lavadora</option>
+							<option>Otro</option>
 						</select>
 					</div>
 					<div class="form-group">

@@ -65,4 +65,20 @@ class Usuario_model extends CI_Model{
         else: return false;
         endif;
     }
+
+    public function update_user_data($username = null, $email = null, $name = null, $lastName = null){
+        if($username != null){
+            $this->db->set('username', $username);
+        }
+        if($email != null){
+            $this->db->set('email', $email);
+        }
+        if($name != null){
+            $this->db->set('nombre', $name);
+        }
+        if($lastName != null){
+            $this->db->set('apellidos', $lastName);
+        }
+        $this->db->update('usuario');
+    }
 }

@@ -19,7 +19,7 @@
 					<div class="row">
 						<div class="col">
 							<div class="card card-nav-tabs text-center">
-								<div class="card-header card-header-primary">
+								<div class="card-header card-header-info">
 									Rango de horas
 								</div>
 								<div class="card-body">
@@ -37,7 +37,7 @@
 									</div>
 								</div>
 								<div class="card-footer justify-content-center">
-									<button class="btn btn-primary btnHoras">Filtrar</button>
+									<button class="btn btn-warning btnHoras">Filtrar</button>
 								</div>
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 							<div class="row">
 								<div class="col">
 									<div class="card card-nav-tabs text-center">
-										<div class="card-header card-header-primary">
+										<div class="card-header card-header-info">
 											Rango de fechas
 										</div>
 										<div class="card-body">
@@ -59,7 +59,7 @@
 							</div>
 							<div class="row">
 								<div class="col">
-									<button class="btn btn-primary btn-lg btnFiltrar">Resumen de todos los dias registrados</button>
+									<button class="btn btn-warning btn-lg btnFiltrar">Resumen de todos los dias registrados</button>
 								</div>
 							</div>
 						</div>

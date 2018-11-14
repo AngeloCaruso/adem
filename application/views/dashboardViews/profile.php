@@ -1,88 +1,76 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Editar perfil</h4>
-                    <p class="card-category">Actualiza tus datos</p>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Usuario</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Correo electrónico</label>
-                                    <input type="email" class="form-control">
-                                </div>
-                            </div>
+<div class="container">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 mt-auto mb-auto">
+				<div class="card">
+					<div class="card-header card-header-rose">
+						<h4 class="card-title">Editar perfil</h4>
+						<p class="card-category">Actualiza tus datos</p>
+					</div>
+					<div class="card-body">
+						<form>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group bmd-form-group">
+                                        <?='<input type="text" id="editUser" value="'.$user.'" class="form-control" placeholder="Usuario">'?>
+									</div>
+								</div>
+								<div class="col-md-7">
+									<div class="form-group bmd-form-group">
+										<?='<input type="email" id="editEmail" value="'.$email.'" class="form-control" placeholder="Correo electrónico">'?>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group bmd-form-group">
+										<?='<input type="text" id="editName" value="'.$name.'"class="form-control" placeholder="Nombre">'?>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group bmd-form-group">
+										<?='<input type="text" id="editLastN" value="'.$lastN.'"class="form-control" placeholder="Apellidos">'?>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-7">
+									<div class="form-group bmd-form-group">
+										<input type="text" id="editDirec" class="form-control" placeholder="Direccion">
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group bmd-form-group">
+										<input type="text" id="editCountry" class="form-control" placeholder="Ciudad">
+									</div>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-rose pull-right btnUpdate">Actualizar datos</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mt-auto mb-auto">
+				<div class="card">
+					<div class="card-header card-header-rose">
+						<div class="card-title">
+                            <h3>Feedback</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Nombre</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Apellidos</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Dirección</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Ciudad</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary pull-right">Actualizar perfil</button>
-                        <div class="clearfix"></div>
-                    </form>
-                    <form>
-                        <div class="row">
-                            <div class="col">
-                                <div class="divider"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p>Feedback form</p>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-profile">
-                <div class="card-avatar">
-                    <img class="img" src="./assets/material-dashboard/assets/img/faces/marc.jpg" />
-                </div>
-                <div class="card-body">
-                    <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                    <h4 class="card-title">Alec Thompson</h4>
-                    <p class="card-description">
-                        Don't be scared of the truth because we need to restart the human foundation in truth And I
-                        love
-                        you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+						<p>¡Dinos lo que más te gusta de la plataforma!</p>
+					</div>
+					<div class="card-body">
+						<div class="input-group">
+							<input type="email" class="form-control feedback" placeholder="Correo electrónico">
+						</div>
+						<div class="form-group bdm-form-group">
+							<textarea class="form-control feedback" cols="1" rows="5" placeholder="Detalles de las observaciones"></textarea>
+						</div>
+                    </div>
+                    <div class="card-footer justify-content-center">
+                        <button class="btn btn-rose btn-lg">Enviar</button>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

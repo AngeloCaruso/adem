@@ -69,6 +69,20 @@ $(function () {
 		for (var i = 1; i < 99999; i++)
         window.clearInterval(i);
 	}
+	function showNotification(from, align, type, message){
+		$.notify({
+			icon: "add_alert",
+			message: message
+		},{
+			type: type,
+			timer: 1000,
+			placement: {
+				from: from,
+				align: align
+			}
+		});
+	  }
+
 	var options = {
 		elements: {
 			line: {
@@ -101,17 +115,18 @@ $(function () {
 			type: "post",
 			url: "dashboard/dispositivos",
 			success: function (res) {
+				console.log(res)
 				dispositivos = JSON.parse(res)
 				chartList = []
 				dispositivos.map(disp => {
-					crearDispositivo(disp.serial, disp.nombre, disp.descripcion)
+					crearDispositivo(disp.serial, disp.nombre, disp.tipo_disp, disp.descripcion)
 				});
 			}
 		});
 	}
 
 	//Cargar dispositivos
-	function crearDispositivo(id, nombre, desc) {
+	function crearDispositivo(id, nombre, tipo, desc) {
 		let disp = `
         <div class="col-md-6">
             <div class="card card-chart">
@@ -120,11 +135,12 @@ $(function () {
               </div>
 			  <div class="card-body">
 				  <div class="row">
-					  <div class="col">
-					  	<h4>Nombre: ${nombre}</h4>
+					  <div class="col-md-7">
+						  <h6>Nombre: ${nombre}</h6>
+						  <h5>Dispositivo: ${tipo}</h5>
 					  </div>
-					  <div class="col text-right">
-					  	<button class="btn btn-info btnDetalles" serial="${id}">Detalles</button>
+					  <div class="col-md-5 text-right">
+					  	<button class="btn btn-warning btnDetalles" serial="${id}">Detalles</button>
 					  </div>
 				  </div>
               </div>
@@ -319,6 +335,7 @@ $(function () {
 		e.preventDefault()
 		let nombre = $('.addDispNombre').val()
 		let serial = $('.addDispSerial').val()
+		let type = $('#selectDevice :selected').text()
 		let desc = $('.addDispDesc').val()
 		$.ajax({
 			type: "post",
@@ -326,13 +343,15 @@ $(function () {
 			data: {
 				nombre: nombre,
 				serial: serial,
+				tipo_disp: type,
 				descripcion: desc,
 				intervalo: '',
 			},
 			success: function (res) {
 				console.log(res)
 				if (res == 'Ok') {
-					crearDispositivo(serial, nombre, desc)
+					crearDispositivo(serial, nombre, type, desc)
+					showNotification('bottom', 'right', 'success', 'Dispositivo agregado')
 				}
 			}
 		});
@@ -364,9 +383,57 @@ $(function () {
 			}
 		});
 	})
+	$('.content').on('click', '.btnUpdate', function(e){
+		e.preventDefault();
+		let newUser = $('#editUser').val()
+		let newEmail = $('#editEmail').val()
+		let newName = $('#editName').val()
+		let newLastN = $('#editLastN').val()
+		$.ajax({
+			type: "post",
+			url: "dashboard/updateUser",
+			data:{
+				user: newUser,
+				email: newEmail,
+				name: newName,
+				lastN: newLastN
+			},
+			success: function (res) {
+				$('.content').load('dashboard/showProfile')
+				showNotification('bottom', 'left', 'success', 'Perfil actualizado')
+			}
+		});
+	})
+
 	$('.content').on('click', '.btnDetalles', function () {
 		let id = $(this).attr('serial')
 		clearInterval(dispUpdater)
 		$('.content').load('dashboard/loadDisp/'+id)
+	})
+
+	$('.content').on('click', '.btnSettings', function(e){
+		e.preventDefault();
+		let newName = $('.devName').val()
+		let newType = $('#selectNewDev').val()
+		let disp = $('#selectSerial').val()
+		let newDesc = $('.newDesc').val()
+		$.ajax({
+			type: "get",
+			url: "dashboard/updateDevice",
+			data:{
+				serial: disp,
+				devName: newName,
+				devType: newType,
+				desc: newDesc
+			},
+			success: function (res) {
+				console.log(res)
+				if(res != 'Error'){
+					showNotification('bottom', 'right', 'primary', 'El dispositivo ha sido actualizado')
+				}else{
+					showNotification('bottom', 'right', 'danger', 'Error al actualizar el dispositivo')
+				}
+			}
+		});
 	})
 })
