@@ -88,8 +88,54 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function loadDisp($id){
-		$this->load->view('dashboardViews/detailDisp', array('name' => $id));
+		$this->load->view('dashboardViews/detailDisp', array('serial' => '<h3 class="serial" align="center">'.$id.'</h3>'));
 	}
+
+	public function loadDayFilter(){
+		if(isset($_GET['serial']) && isset($_GET['date'])){
+			$serial = $_GET['serial'];
+			$date = $_GET['date'];
+			$this->load->model('filtros_model');
+			echo json_encode($this->filtros_model->filtroDiaEspec($serial, $date));
+		}else{
+			echo 'Datos incorrectos';
+		}
+	}
+
+	public function loadDateRange(){
+		if(isset($_GET['serial']) && isset($_GET['from']) && isset($_GET['to'])){
+			$serial = $_GET['serial'];
+			$from = $_GET['from'];
+			$to = $_GET['to'];
+			$this->load->model('filtros_model');
+			echo json_encode($this->filtros_model->rangoFechas($serial, $from, $to));
+		}else{
+			echo 'Datos incorrectos';
+		}
+	}
+
+	public function loadHourRange(){
+		if(isset($_GET['serial']) && isset($_GET['from']) && isset($_GET['to'])){
+			$serial = $_GET['serial'];
+			$from = $_GET['from'];
+			$to = $_GET['to'];
+			$this->load->model('filtros_model');
+			echo json_encode($this->filtros_model->rangoHoras($serial, $from, $to));
+		}else{
+			echo 'Datos incorrectos';
+		}
+	}
+
+	public function prom_dias(){
+		if(!$this->session->userdata('usuario')) redirect('login');
+		if(isset($_GET["serial"])){
+			$serial=$_GET["serial"];
+			$this->load->model('filtros_model');
+			echo json_encode($this->filtros_model->promedioDias($serial));
+		}else{
+			echo "Datos incorrectos";
+		}
+    }
 	
 	public function showAllDisp(){
 		$this->load->view('dashboardViews/allDisp');

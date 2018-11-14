@@ -1,14 +1,15 @@
-function cargarDetalleDisp(id) {
-	$('.content').load('dashboard/loadDisp/'+id)
-}
-
 $(function () {
 	var dispositivos = []
 	var chartList = []
 	var lastData = []
+	var dispUpdater
+
 	$('.content').load('dashboard/showAllDisp', function (m) {
+		laEscoba()
 		cargarDisp()
+		dispUpdater = setInterval(updateCharts, 4000)
 	})
+
 	//Seleccion dinamica del sidebar
 	$('.btnDashboard').on('click', function () {
 		if (!$('.btnDashboard').hasClass('active')) {
@@ -17,10 +18,12 @@ $(function () {
 			$('.panelTitle').text('Dashboard');
 		}
 		$('.content').load('dashboard/showAllDisp', function (m) {
+			laEscoba()
 			cargarDisp()
 			chartList.map(x => {
 				console.log(x.data.datasets)
 			})
+			dispUpdater = setInterval(updateCharts, 4000)
 		})
 	})
 	$('.btnProfile').on('click', function () {
@@ -29,6 +32,8 @@ $(function () {
 			$('.btnProfile').addClass('active')
 			$('.panelTitle').text('Perfil de usuario');
 		}
+		laEscoba()
+		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showProfile')
 	})
 	$('.btnSettings').on('click', function () {
@@ -37,6 +42,8 @@ $(function () {
 			$('.btnSettings').addClass('active')
 			$('.panelTitle').text('Configuración de dispositivos');
 		}
+		laEscoba()
+		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showSettings')
 	})
 	$('.btnLogout').on('click', function () {
@@ -44,6 +51,8 @@ $(function () {
 			$('.nav').find('li.active').removeClass('active')
 			$('.btnLogout').addClass('active')
 		}
+		laEscoba()
+		clearInterval(dispUpdater)
 	})
 	$('.btnAdmin').on('click', function () {
 		if (!$('.btnAdmin').hasClass('active')) {
@@ -51,23 +60,14 @@ $(function () {
 			$('.btnAdmin').addClass('active')
 			$('.panelTitle').text('Administrador de usuarios');
 		}
+		laEscoba()
+		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showAdmin')
 	})
 
-	function notification(from, align, msg) {
-
-		$.notify({
-			icon: "add_alert",
-			message: msg
-
-		}, {
-			type: 'success',
-			timer: 4000,
-			placement: {
-				from: from,
-				align: align
-			}
-		});
+	function laEscoba(){
+		for (var i = 1; i < 99999; i++)
+        window.clearInterval(i);
 	}
 	var options = {
 		elements: {
@@ -96,11 +96,6 @@ $(function () {
 		}
 	}
 
-	if ($('body').attr('id') == 'bDashboard') {
-		//cargarDisp()
-		//var test = setInterval(updateCharts, 4000)
-	}
-
 	function cargarDisp() {
 		$.ajax({
 			type: "post",
@@ -126,10 +121,10 @@ $(function () {
 			  <div class="card-body">
 				  <div class="row">
 					  <div class="col">
-					  	<h4>${nombre}</h4>
+					  	<h4>Nombre: ${nombre}</h4>
 					  </div>
 					  <div class="col text-right">
-					  	<button class="btn btn-info btnDetalles" onclick=cargarDetalleDisp("${id}")>Detalles</button>
+					  	<button class="btn btn-info btnDetalles" serial="${id}">Detalles</button>
 					  </div>
 				  </div>
               </div>
@@ -150,20 +145,8 @@ $(function () {
 		var myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
-				//labels: [0, 1, 2, 3, 4, 5],
 				datasets: [{
 					label: 'vatios medidos',
-					//data: [12, 19, 3, 5, 2, 3],
-					/*data: [{
-						x: new Date('2018-11-12 13:55:28'),
-						y:5
-					},{
-						x: new Date('2018-11-12 13:55:35'),
-						y:4
-					},{
-						x: new Date('2018-11-12 13:55:40'),
-						y:9
-					}],*/
 					borderWidth: 1,
 					backgroundColor: 'rgba(66,66,66,0.4)',
 					pointBackgroundColor: 'rgba(33,33,33,1)',
@@ -185,23 +168,24 @@ $(function () {
 			},
 			success: function (res) {
 				let data = []
-				JSON.parse(res).map(d => {
+				JSON.parse(res).reverse().map(d => {
 					let newData = {
 						x: new Date(d.fecha),
 						y: d.vatios
 					}
 					data.push(newData)
+					lastData[id] = d.id
 				})
-				lastData[id] = res[0].id
 				chart.data.datasets[0].data = data
 				chart.update()
 			}
 		});
 	}
-
+	
 	function updateData(chart) {
 		let serial = chart.canvas.id
 		let lastId = lastData[serial]
+		//console.log(lastId)
 		$.ajax({
 			type: "get",
 			url: "dashboard/datos",
@@ -220,6 +204,7 @@ $(function () {
 					lastData[serial] = d.id
 				})
 				console.log(lastData[serial])
+				chart.update()
 			}
 		});
 	}
@@ -236,7 +221,6 @@ $(function () {
 	function updateCharts() {
 		chartList.map(chart => {
 			updateData(chart)
-			chart.update()
 		})
 	}
 	//login - registro
@@ -331,7 +315,7 @@ $(function () {
 			$('.regConfPass').css('background-image', 'linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #f44336 1px, rgba(210, 210, 210, 0) 1px)')
 		}
 	})
-	$('.btnAgregar').on('click', function (e) {
+	$('.content').on('click', '.btnAgregar', function (e) {
 		e.preventDefault()
 		let nombre = $('.addDispNombre').val()
 		let serial = $('.addDispSerial').val()
@@ -353,7 +337,7 @@ $(function () {
 			}
 		});
 	})
-	$('.addDispSerial').on('focusout', function () {
+	$('.content').on('focusout', '.addDispSerial', function () {
 		$.ajax({
 			type: "get",
 			url: "dashboard/dispositivo_disponible",
@@ -379,5 +363,10 @@ $(function () {
 				}
 			}
 		});
+	})
+	$('.content').on('click', '.btnDetalles', function () {
+		let id = $(this).attr('serial')
+		clearInterval(dispUpdater)
+		$('.content').load('dashboard/loadDisp/'+id)
 	})
 })
