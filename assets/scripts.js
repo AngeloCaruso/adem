@@ -123,7 +123,7 @@ $(function () {
 				console.log(res)
 				dispositivos = JSON.parse(res)
 				chartList = []
-				dispositivos.map(disp => {
+				dispositivos.map((disp) => {
 					crearDispositivo(disp.serial, disp.nombre, disp.tipo_disp, disp.descripcion)
 				});
 			}
@@ -133,7 +133,7 @@ $(function () {
 	//Cargar dispositivos
 	function crearDispositivo(id, nombre, tipo, desc) {
 		let disp = `
-        <div class="col-md-6">
+        <div class="col-md-6 dispCard" canvasid="${id}">
             <div class="card card-chart">
               <div class="card-header card-header-info">
                 <canvas id="${id}"></canvas>
@@ -150,7 +150,10 @@ $(function () {
 				  </div>
               </div>
               <div class="card-footer">
-                <p>${desc}</p>
+				<p>${desc}</p>
+				<button eraseId="${id}" type="button" class="btn btn-danger btn-sm pl-2 pr-2 btnErase" rel="tooltip" data-placement="bottom" title="Borrar dispositivo">
+                    <i class="material-icons">close</i>
+                </button>
               </div>
             </div>
         </div>
@@ -244,6 +247,7 @@ $(function () {
 			updateData(chart)
 		})
 	}
+
 	//login - registro
 	$('.formLogin').on('submit', function (e) {
 		e.preventDefault()
@@ -349,6 +353,7 @@ $(function () {
 		e.preventDefault()
 		let nombre = $('.addDispNombre').val()
 		let serial = $('.addDispSerial').val()
+		let interval = $('.addDispInterv').val()
 		let type = $('#selectDevice :selected').text()
 		let desc = $('.addDispDesc').val()
 		$.ajax({
@@ -359,7 +364,7 @@ $(function () {
 				serial: serial,
 				tipo_disp: type,
 				descripcion: desc,
-				intervalo: '',
+				intervalo: interval*1000,
 			},
 			success: function (res) {
 				console.log(res)
@@ -530,6 +535,27 @@ $(function () {
 			},
 			error: function (res) {
 				$('.loginErr').text('Correo incorrecto');
+			}
+		});
+	})
+
+	$('.content').on('click', '.btnErase', function(){
+		let serial = $(this).attr('eraseId')
+		$.ajax({
+			type: "post",
+			url: "dashboard/eliminarDispositivo",
+			data: {
+				serial: serial
+			},
+			success: function (res) {
+				showNotification('bottom', 'right', 'success', 'Dispositivo borrado')
+				$('.dispCard[canvasid="'+serial+'"]').remove()
+				chartList.map(chart => {
+					if(chart.canvas.id == serial){
+						chartList.splice(chartList.indexOf(chart), 1)
+					}
+				})
+				
 			}
 		});
 	})

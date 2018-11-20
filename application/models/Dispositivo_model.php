@@ -80,9 +80,9 @@ class Dispositivo_model extends CI_Model{
         return $query->result();
     }
     
-    public function eliminar_uc($id){
-        $this->db->set('usuario_id', "");
-        $this->db->where('id', $id);
+    public function eliminar_uc($serial){
+        $this->db->set('usuario_id', null);
+        $this->db->where('serial', $serial);
         $this->db->update('dispositivos');
     }
     

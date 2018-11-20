@@ -17,7 +17,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="input-group">
+					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
 								<i class="material-icons">tablet_android</i>
@@ -25,27 +25,27 @@
 						</div>
 						<input class="form-control addDispNombre" type="text" placeholder="Nombre del dispositivo" autocomplete="off">
 					</div>
-					<div class="input-group">
+					<div class="input-group mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
 								<i class="material-icons">access_time</i>
 							</span>
 						</div>
-						<input class="form-control addDispInterv" type="text" placeholder="Intervalo de envío de datos" autocomplete="off">
+						<input class="form-control addDispInterv" type="text" placeholder="Intervalo de envío de datos (En segundos)" autocomplete="off">
 					</div>
-					<div class="input-group serialMsg">
+					<div class="input-group serialMsg mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
 								<i class="material-icons">memory</i>
 							</span>
 						</div>
-						<input class="form-control addDispSerial" type="text" placeholder="Serial" autocomplete="off">
+						<input class="form-control addDispSerial mb-2" type="text" placeholder="Serial" autocomplete="off">
 						<span class="form-control-feedback">
 							<i class="material-icons errMsg"></i>
 						</span>
 					</div>
 					<div class="input-group">
-						<select class="form-control" id="selectDevice">
+						<select class="custom-select" id="selectDevice">
 							<option>Aire acondicionado</option>
 							<option>Nevera</option>
 							<option>Televisor</option>
@@ -58,8 +58,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary btnAgregar" data-dismiss="modal">Guardar cambios</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button class="btn btn-warning btnAgregar" data-dismiss="modal">Guardar cambios</button>
 				</div>
 			</div>
 		</div>

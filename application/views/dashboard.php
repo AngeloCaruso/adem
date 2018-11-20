@@ -74,27 +74,6 @@
 						<span class="navbar-toggler-icon icon-bar"></span>
 						<span class="navbar-toggler-icon icon-bar"></span>
 					</button>
-					<div class="collapse navbar-collapse justify-content-end">
-						<ul class="navbar-nav">
-							<li class="nav-item dropdown">
-								<a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									<i class="material-icons">notifications</i>
-									<span class="notification">5</span>
-									<p class="d-lg-none d-md-block">
-										Some Actions
-									</p>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="#">Mike John responded to your email</a>
-									<a class="dropdown-item" href="#">You have 5 new tasks</a>
-									<a class="dropdown-item" href="#">You're now friend with Andrew</a>
-									<a class="dropdown-item" href="#">Another Notification</a>
-									<a class="dropdown-item" href="#">Another One</a>
-								</div>
-							</li>
-						</ul>
-					</div>
 				</div>
 			</nav>
 			<!-- End Navbar -->
@@ -106,34 +85,14 @@
 					<nav class="float-left">
 						<ul>
 							<li>
-								<a href="https://www.creative-tim.com">
-									Creative Tim
-								</a>
-							</li>
-							<li>
-								<a href="https://creative-tim.com/presentation">
-									About Us
-								</a>
-							</li>
-							<li>
-								<a href="http://blog.creative-tim.com">
-									Blog
-								</a>
-							</li>
-							<li>
-								<a href="https://www.creative-tim.com/license">
-									Licenses
+								<a href="https://www.cuc.edu.co/">
+									Universidad de la costa CUC
 								</a>
 							</li>
 						</ul>
 					</nav>
 					<div class="copyright float-right">
-						&copy;
-						<script>
-							document.write(new Date().getFullYear())
-
-						</script>, made with <i class="material-icons">favorite</i> by
-						<a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+						&copy;2018 ADEM, derechos intelectualmente reservados
 					</div>
 				</div>
 			</footer>

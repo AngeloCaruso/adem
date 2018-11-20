@@ -254,4 +254,11 @@ class Dashboard extends CI_Controller {
 			echo json_encode($disp);
 		}
 	}
+	public function eliminarDispositivo(){
+		if(isset($_POST['serial'])){
+			$serial = $_POST['serial'];
+			$this->load->model('dispositivo_model');
+			$this->dispositivo_model->eliminar_uc($serial);
+		}
+	}
 }
