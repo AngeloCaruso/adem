@@ -27,24 +27,24 @@
 												<i class="material-icons">access_time</i>
 											</span>
 										</div>
-										<input class="form-control" type="text" placeholder="Intervalo de envío de datos" autocomplete="off">
+										<input class="form-control inputInterval" type="text" placeholder="Intervalo de envío de datos" autocomplete="off">
 									</div>
 								</div>
 							</div>
 							<div class="row mt-4">
 								<div class="col">
 									<select class="custom-select" id="selectNewDev">
-                                        <option selected>Elige el tipo de dispositivo...</option>
-										<option>Aire acondicionado</option>
-										<option>Nevera</option>
-										<option>Televisor</option>
-										<option>Lavadora</option>
-										<option>Otro</option>
+                                        <option value="0">Elige el tipo de dispositivo...</option>
+										<option value="1">Aire acondicionado</option>
+										<option value="2">Nevera</option>
+										<option value="3">Televisor</option>
+										<option value="4">Lavadora</option>
+										<option value="5">Otro</option>
 									</select>
 								</div>
 								<div class="col">
 									<select class="custom-select" id="selectSerial">
-                                        <option selected>Elige el dispositivo...</option>
+                                        <option>Elige el dispositivo...</option>
                                         <?php
                                             foreach ($serialList as $value) {
                                                 echo '<option>'.$value->serial.'</option>';

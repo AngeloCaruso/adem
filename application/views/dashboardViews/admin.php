@@ -18,12 +18,42 @@
                             Cantidad de dispositivos
                         </th>
                         <th>
-                            Ban hammer
+                            Inhabilitar
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    <?php 
+                        foreach ($userList as $value) {
+                            echo '<tr>';
+                            echo '<td>'.$value->id.'</td>';
+                            echo '<td>'.$value->nombre.'</td>';
+                            echo '<td>'.$value->dispositivos.'</td>';
+                            if($value->id_estado == 7){
+                                echo '
+                                <td class="td-actions">
+                                    <button id="'.$value->id.'" type="button" class="btn btn-danger btn-sm btnBan" rel="tooltip" data-placement="bottom" title="Inhabilitar usuario">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                    <button id="'.$value->id.'" type="button" class="btn btn-info btn-sm btnUnBan disabled" rel="tooltip" data-placement="bottom" title="Inhabilitar usuario">
+                                        <i class="material-icons">done</i>
+                                    </button>
+                                </td>';
+                            echo '</tr>';
+                            }else{
+                                echo '
+                                <td class="td-actions">
+                                    <button id="'.$value->id.'" type="button" class="btn btn-danger btn-sm btnBan disabled" rel="tooltip" data-placement="bottom" title="Inhabilitar usuario">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                    <button id="'.$value->id.'" type="button" class="btn btn-info btn-sm btnUnBan" rel="tooltip" data-placement="bottom" title="Inhabilitar usuario">
+                                        <i class="material-icons">done</i>
+                                    </button>
+                                </td>';
+                            echo '</tr>';
+                            }
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>

@@ -18,6 +18,7 @@ $(function () {
 			$('.panelTitle').text('Dashboard');
 		}
 		$('.content').load('dashboard/showAllDisp', function (m) {
+			$('.main-panel').scrollTop(0)
 			laEscoba()
 			cargarDisp()
 			chartList.map(x => {
@@ -32,6 +33,7 @@ $(function () {
 			$('.btnProfile').addClass('active')
 			$('.panelTitle').text('Perfil de usuario');
 		}
+		$('.main-panel').scrollTop(0)
 		laEscoba()
 		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showProfile')
@@ -42,6 +44,7 @@ $(function () {
 			$('.btnSettings').addClass('active')
 			$('.panelTitle').text('Configuración de dispositivos');
 		}
+		$('.main-panel').scrollTop(0)
 		laEscoba()
 		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showSettings')
@@ -60,20 +63,22 @@ $(function () {
 			$('.btnAdmin').addClass('active')
 			$('.panelTitle').text('Administrador de usuarios');
 		}
+		$('.main-panel').scrollTop(0)
 		laEscoba()
 		clearInterval(dispUpdater)
 		$('.content').load('dashboard/showAdmin')
 	})
 
-	function laEscoba(){
+	function laEscoba() {
 		for (var i = 1; i < 99999; i++)
-        window.clearInterval(i);
+			window.clearInterval(i);
 	}
-	function showNotification(from, align, type, message){
+
+	function showNotification(from, align, type, message) {
 		$.notify({
 			icon: "add_alert",
 			message: message
-		},{
+		}, {
 			type: type,
 			timer: 1000,
 			placement: {
@@ -81,7 +86,7 @@ $(function () {
 				align: align
 			}
 		});
-	  }
+	}
 
 	var options = {
 		elements: {
@@ -197,7 +202,7 @@ $(function () {
 			}
 		});
 	}
-	
+
 	function updateData(chart) {
 		let serial = chart.canvas.id
 		let lastId = lastData[serial]
@@ -253,8 +258,12 @@ $(function () {
 			success: function (res) {
 				if (res == 'Ok') {
 					window.location.href = 'dashboard'
-				} else {
+				} else if (res == 'no_existe') {
 					$('.loginErr').text('Error al ingresar, por favor revisa tus credenciales')
+				} else if (res == 'ban') {
+					$('.loginErr').text('Ban Hammer')
+				} else if (res == 'conf_registro') {
+					$('.loginErr').text('El usuario no ha confirmado el registro')
 				}
 			}
 		});
@@ -297,6 +306,11 @@ $(function () {
 						$('.emailErr').text('clear')
 						$('.emailInput').removeClass('has-success')
 						$('.emailInput').addClass('has-danger')
+					} else {
+						$('.regCorreo').css('background-image', 'linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #4caf50 1px, rgba(210, 210, 210, 0) 1px)')
+						$('.emailErr').text('done')
+						$('.emailInput').removeClass('has-danger')
+						$('.emailInput').addClass('has-success')
 					}
 				}
 			});
@@ -383,7 +397,7 @@ $(function () {
 			}
 		});
 	})
-	$('.content').on('click', '.btnUpdate', function(e){
+	$('.content').on('click', '.btnUpdate', function (e) {
 		e.preventDefault();
 		let newUser = $('#editUser').val()
 		let newEmail = $('#editEmail').val()
@@ -392,7 +406,7 @@ $(function () {
 		$.ajax({
 			type: "post",
 			url: "dashboard/updateUser",
-			data:{
+			data: {
 				user: newUser,
 				email: newEmail,
 				name: newName,
@@ -408,31 +422,114 @@ $(function () {
 	$('.content').on('click', '.btnDetalles', function () {
 		let id = $(this).attr('serial')
 		clearInterval(dispUpdater)
-		$('.content').load('dashboard/loadDisp/'+id)
+		$('.content').load('dashboard/loadDisp/' + id)
 	})
 
-	$('.content').on('click', '.btnSettings', function(e){
+	$('.content').on('click', '.btnSettings', function (e) {
 		e.preventDefault();
 		let newName = $('.devName').val()
 		let newType = $('#selectNewDev').val()
 		let disp = $('#selectSerial').val()
 		let newDesc = $('.newDesc').val()
+		let newInterval = $('.inputInverval').val()
 		$.ajax({
 			type: "get",
 			url: "dashboard/updateDevice",
-			data:{
+			data: {
 				serial: disp,
 				devName: newName,
 				devType: newType,
-				desc: newDesc
+				desc: newDesc,
+				interval: newInterval
 			},
 			success: function (res) {
 				console.log(res)
-				if(res != 'Error'){
-					showNotification('bottom', 'right', 'primary', 'El dispositivo ha sido actualizado')
-				}else{
+				if (res != 'Error') {
+					$('.content').load('dashboard/showSettings')
+					showNotification('bottom', 'right', 'success', 'El dispositivo ha sido actualizado')
+				} else {
 					showNotification('bottom', 'right', 'danger', 'Error al actualizar el dispositivo')
 				}
+			}
+		});
+	});
+	$('.content').on('change', '#selectSerial', function () {
+		let serial = $('#selectSerial').val()
+		console.log(serial);
+		$.ajax({
+			type: "post",
+			url: "dashboard/getDisp",
+			data: {
+				serial: serial
+			},
+			success: function (res) {
+				let data = JSON.parse(res)
+				$('.devName').val(data.nombre)
+				$('.inputInterval').val(data.intervalo)
+				$('#selectNewDev option:contains('+data.tipo_disp+')').attr('selected', 'selected');
+				$('.newDesc').text(data.descripcion)
+			}
+		});
+	})
+	$('.content').on('click', '.btnBan', function () {
+		let id = $(this).attr('id');
+		$.ajax({
+			type: "get",
+			url: "dashboard/cambiar_estado_usuario",
+			data: {
+				id: id,
+				estado: 9
+			},
+			success: function (res) {
+				if (res == 'Ok') {
+
+					$('.content').load('dashboard/showAdmin')
+				} else {
+					showNotification('bottom', 'right', 'danger', 'Error al inhabilitar el usuario')
+				}
+			}
+		});
+	})
+	$('.content').on('click', '.btnUnBan', function () {
+		let id = $(this).attr('id');
+		$.ajax({
+			type: "get",
+			url: "dashboard/cambiar_estado_usuario",
+			data: {
+				id: id,
+				estado: 7
+			},
+			success: function (res) {
+				if (res == 'Ok') {
+
+					$('.content').load('dashboard/showAdmin')
+				} else {
+					showNotification('bottom', 'right', 'danger', 'Error al inhabilitar el usuario')
+				}
+			}
+		});
+	})
+
+	$('.formReestablecer').on('submit', function (e) {
+		e.preventDefault()
+		$('.loginErr').text(' ');
+		let email = $('.rEmail').val()
+		$.ajax({
+			type: "post",
+			url: "olvide_contrasena",
+			data: {
+				email: email
+			},
+			success: function (res) {
+				console.log(res)
+				if (res == 'Ok') {
+					$('.cReset').load('load_email_confirm')
+				} else {
+					$('.loginErr').text('Correo incorrecto');
+				}
+			},
+			error: function (res) {
+				$('.loginErr').text('Correo incorrecto');
 			}
 		});
 	})

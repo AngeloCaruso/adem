@@ -69,4 +69,4 @@
 		</div>
 	</div>
 </div>
-<script src="./assets/disp.js"></script>
+<script src="./assets/detail.js"></script>

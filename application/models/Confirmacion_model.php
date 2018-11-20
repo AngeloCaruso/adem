@@ -49,4 +49,20 @@ class Confirmacion_model extends CI_Model{
         );
         return $this->db->insert('confirmacion', $data);
     }
+    
+    public function buscar_recuperar_contrasena($llave){
+        $this->db->where('llave', $llave);
+        $this->db->where('tipo_vp', 4);
+        $this->db->where('estado_vp', 7);
+        $query = $this->db->get('confirmacion');
+        return $query;
+    }
+    
+    public function buscar_recuperar_cont_id_usuario($id_usuario){
+        $this->db->where('usuario_id', $id_usuario);
+        $this->db->where('tipo_vp', 4);
+        $this->db->where('estado_vp', 7);
+        $query = $this->db->get('confirmacion');
+        return $query;
+    }
 }

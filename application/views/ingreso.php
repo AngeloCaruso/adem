@@ -46,7 +46,8 @@
 													<i class="material-icons">mail</i>
 												</span>
 											</div>
-											<input class="form-control userLogin" type="text" placeholder="Usuario o correo electrónico" autocomplete="off" required>
+											<input class="form-control userLogin" type="text" placeholder="Usuario o correo electrónico" autocomplete="off"
+											 required>
 										</div>
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -59,6 +60,11 @@
 										<div class="row">
 											<div class="col text-center">
 												<label class="err loginErr"></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col text-right">
+												<p>¿Olvidaste tu contraseña? <a href="login/load_reset">Click aquí para recuperarla</a></p>
 											</div>
 										</div>
 										<div class="input-group justify-content-center">
@@ -122,12 +128,12 @@
 												</span>
 											</div>
 											<input class="form-control regConfPass" type="password" placeholder="Confirma tu contraseña" required>
-                    </div>
-                    <div class="row">
-                      <div class="col text-center">
-                        <label class="err regErr"></label>
-                      </div>
-                    </div>
+										</div>
+										<div class="row">
+											<div class="col text-center">
+												<label class="err regErr"></label>
+											</div>
+										</div>
 										<div class="input-group justify-content-center">
 											<button class="btn btn-primary">Registrarse</button>
 										</div>

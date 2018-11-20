@@ -11,12 +11,11 @@ $(function () {
 	var timeTo = $('#timeTo').datepicker({
 		timepicker: true
 	}).data('datepicker')
-
 	var serial = $('.serial').text()
 	let filterGraph = $('#filterGraph')
 	let lineGraph = $('#lineGraph')
 	let barGraph = $('#barGraph')
-
+	
 	function parseDate(date) {
 		let newDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 		return newDate

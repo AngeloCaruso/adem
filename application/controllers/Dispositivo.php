@@ -13,8 +13,9 @@ class Dispositivo extends CI_Controller {
             $serial = $_GET['serial'];
             $corriente = $_GET['corriente'];
             $this->load->model('datos_model');
+            $intervalo = $this->datos_model->intervalo($serial);
             if($this->datos_model->agregarMedicion($serial, $corriente)){
-                echo "OK";
+                echo $intervalo;
             }else{
                 echo "ERROR";
             }

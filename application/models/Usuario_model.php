@@ -18,11 +18,16 @@ class Usuario_model extends CI_Model{
     public function login($usuario, $password){
         $password = md5($password);
         $query = $this->db->query("SELECT * FROM usuario WHERE (`email` = '$usuario' OR `username` = '$usuario') AND `password` = '$password'");
-        if($query->num_rows()>0): return $query->row();
-        else: return null;
-
-
-        endif;
+        if($query->num_rows()>0){
+            $estado = $query->row()->estado_vp;
+            if($estado == 7){
+                return $query->row();
+            }else{
+                return $estado;
+            }
+        }else{
+            return null;
+        }
     }
 
     public function actualizar_estado($id_usuario, $nuevo_estado){
@@ -39,7 +44,7 @@ class Usuario_model extends CI_Model{
             'nombre' => $nombre,
             'apellidos' => $apellidos,
             'tipo_vp' => "2",
-            'estado_vp' => "8"
+            'estado_vp' => "10"
         );
         return $this->db->insert('usuario', $data);
     }
@@ -66,6 +71,25 @@ class Usuario_model extends CI_Model{
         endif;
     }
 
+    public function cambiar_contrasena($id, $password){
+        $this->db->set('password', md5($password));
+        $this->db->where('id', $id);
+        $this->db->update('usuario');
+    }    
+
+    //Solo admin
+    public function lista_usuarios(){
+        $this->db->select('u.id id, CONCAT(u.nombre, " ", u.apellidos) nombre,
+        COUNT(d.id) dispositivos, u.estado_vp id_estado, (SELECT valor estado FROM valor_parametro WHERE id = u.estado_vp) estado');
+        $this->db->from('usuario u');
+        $this->db->join('dispositivos d', 'u.id = d.usuario_id', 'left');
+        $this->db->where('u.tipo_vp', 2);
+        $this->db->where('u.estado_vp = 7 OR u.estado_vp = 9');
+        $this->db->group_by("u.id");
+        $query = $this->db->get();
+        return $query->result();
+    }
+    //Fin Solo admin
     public function update_user_data($username = null, $email = null, $name = null, $lastName = null){
         if($username != null){
             $this->db->set('username', $username);

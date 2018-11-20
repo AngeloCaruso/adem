@@ -80,7 +80,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('dispositivo_model');
 		if($this->dispositivo_model->existe($serial)){
 			if($this->dispositivo_model->verificar_disponibilidad($serial)){
-				if($this->dispositivo_model->agregar_uc($id_usuario, $serial, $tipoDisp, $nombre, $descripcion)){
+				if($this->dispositivo_model->agregar_uc($id_usuario, $serial, $tipoDisp, $nombre, $descripcion, $intervalo)){
 					echo "Ok";
 				}else{
 					echo "Error";
@@ -88,6 +88,38 @@ class Dashboard extends CI_Controller {
 			}
 		}
 	}
+	//admin
+	public function lista_usuarios(){
+		if(!$this->session->userdata('usuario')) redirect('login');
+		if($this->session->usuario['tipo_vp']==1){
+			$this->load->model('usuario_model');
+			echo json_encode($this->usuario_model->lista_usuarios());
+		}else{
+			$this->load->view('errors/html/error_403');
+		}
+	}
+
+	public function cambiar_estado_usuario(){
+		if(!$this->session->userdata('usuario')) redirect('login');
+		if($this->session->usuario['tipo_vp']==1){
+			if(isset($_GET["id"], $_GET["estado"])){
+				$id = $_GET["id"];
+				$estado = $_GET["estado"];
+				if($estado == "7" || $estado == "9"){
+					$this->load->model('usuario_model');
+					$this->usuario_model->actualizar_estado($id, $estado);
+					echo "Ok";
+				}else{
+					echo "Error";
+				}
+			}else{
+				echo "Datos incorrectos";
+			}
+		}else{
+			$this->load->view('errors/html/error_403');
+		}
+	}
+	//Admin
 
 	public function updateUser(){
 		if(!$this->session->userdata('usuario')) redirect('login');
@@ -117,8 +149,9 @@ class Dashboard extends CI_Controller {
 			$name = $_GET['devName'];
 			$type = $_GET['devType'];
 			$desc = $_GET['desc'];
+			$intervalo = $_GET['devInterv'];
 			$this->load->model('dispositivo_model');
-			$this->dispositivo_model->editar_uc($serial, $name, $type, $desc);
+			$this->dispositivo_model->editar_uc($serial, $name, $type, $desc, $intervalo);
 		}else{
 			echo 'Error';
 		}
@@ -202,6 +235,23 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function showAdmin(){
-		$this->load->view('dashboardViews/admin');
+		if($this->session->usuario['tipo_vp']==1){
+			$this->load->model('usuario_model');
+			$uList = $this->usuario_model->lista_usuarios();
+			$this->load->view('dashboardViews/admin',
+			array(
+				'userList' => $uList
+			));
+		}else{
+			$this->load->view('errors/html/error_403');
+		}
+	}
+	public function getDisp(){
+		if(isset($_POST['serial'])){
+			$serial = $_POST['serial'];
+			$this->load->model('dispositivo_model');
+			$disp = $this->dispositivo_model->buscar($serial);
+			echo json_encode($disp);
+		}
 	}
 }

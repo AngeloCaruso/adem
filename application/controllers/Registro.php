@@ -12,7 +12,7 @@ class Registro extends CI_Controller {
     public function index()
 	{
         if($this->session->userdata('usuario')){
-            redirect('welcome');
+            redirect('dashboard');
         }
         if(isset($_POST['username'], $_POST['email'])){
             $password = $_POST['password'];
@@ -34,7 +34,7 @@ class Registro extends CI_Controller {
     }
 
     public function sendEmailView(){
-        $this->load->view('confirmacion', array('header' => 'Correo de confirmación enviado', 'body' => 'Si no te llega <a href="registro/enviar_email">Click aqui</a>'));
+        $this->load->view('confirmacion', array('header' => 'Correo de confirmación enviado', 'body' => 'Si no te llega <a href="/enviar_email">Click aqui</a>'));
     }
 
     public function verificar_nombre_usuario(){
@@ -101,10 +101,10 @@ class Registro extends CI_Controller {
                 $this->session->sess_destroy();
                 $this->load->view('confirmacion', array('header' => 'Su cuenta ha sido verificada', 'body' => '<a href="login">Inicia sesión</a>'));
             }else{
-                $this->load->view('errors/html/error_404',array('heading'=>'404 Page Not Found', 'message'=>'The page you requested was not found.'));
+                $this->load->view('errors/html/error_404');
             }
         }else{
-            $this->load->view('errors/html/error_404',array('heading'=>'404 Page Not Found', 'message'=>'The page you requested was not found.'));
+            $this->load->view('errors/html/error_404');
         }
     }
 }
