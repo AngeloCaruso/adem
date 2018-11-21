@@ -149,7 +149,7 @@ class Dashboard extends CI_Controller {
 			$name = $_GET['devName'];
 			$type = $_GET['devType'];
 			$desc = $_GET['desc'];
-			$intervalo = $_GET['devInterv'];
+			$intervalo = $_GET['interval'];
 			$this->load->model('dispositivo_model');
 			$this->dispositivo_model->editar_uc($serial, $name, $type, $desc, $intervalo);
 		}else{

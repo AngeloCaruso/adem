@@ -7,7 +7,7 @@ $(function () {
 	$('.content').load('dashboard/showAllDisp', function (m) {
 		laEscoba()
 		cargarDisp()
-		dispUpdater = setInterval(updateCharts, 4000)
+		dispUpdater = setInterval(updateCharts, 1500)
 	})
 
 	//Seleccion dinamica del sidebar
@@ -24,7 +24,7 @@ $(function () {
 			chartList.map(x => {
 				console.log(x.data.datasets)
 			})
-			dispUpdater = setInterval(updateCharts, 4000)
+			dispUpdater = setInterval(updateCharts, 1500)
 		})
 	})
 	$('.btnProfile').on('click', function () {
@@ -364,7 +364,7 @@ $(function () {
 				serial: serial,
 				tipo_disp: type,
 				descripcion: desc,
-				intervalo: interval*1000,
+				intervalo: interval * 1000,
 			},
 			success: function (res) {
 				console.log(res)
@@ -436,27 +436,31 @@ $(function () {
 		let newType = $('#selectNewDev').val()
 		let disp = $('#selectSerial').val()
 		let newDesc = $('.newDesc').val()
-		let newInterval = $('.inputInverval').val()
-		$.ajax({
-			type: "get",
-			url: "dashboard/updateDevice",
-			data: {
-				serial: disp,
-				devName: newName,
-				devType: newType,
-				desc: newDesc,
-				interval: newInterval
-			},
-			success: function (res) {
-				console.log(res)
-				if (res != 'Error') {
-					$('.content').load('dashboard/showSettings')
-					showNotification('bottom', 'right', 'success', 'El dispositivo ha sido actualizado')
-				} else {
-					showNotification('bottom', 'right', 'danger', 'Error al actualizar el dispositivo')
+		let newInterval = $('.inputInterval').val()
+		if (newInterval < 2) {
+			showNotification('bottom', 'center', 'danger', 'El intervalo debe ser mayor que 1')
+		} else {
+			$.ajax({
+				type: "get",
+				url: "dashboard/updateDevice",
+				data: {
+					serial: disp,
+					devName: newName,
+					devType: newType,
+					desc: newDesc,
+					interval: newInterval * 1000
+				},
+				success: function (res) {
+					console.log(res)
+					if (res != 'Error') {
+						$('.content').load('dashboard/showSettings')
+						showNotification('bottom', 'center', 'success', 'El dispositivo ha sido actualizado')
+					} else {
+						showNotification('bottom', 'center', 'danger', 'Error al actualizar el dispositivo')
+					}
 				}
-			}
-		});
+			});
+		}
 	});
 	$('.content').on('change', '#selectSerial', function () {
 		let serial = $('#selectSerial').val()
@@ -470,8 +474,8 @@ $(function () {
 			success: function (res) {
 				let data = JSON.parse(res)
 				$('.devName').val(data.nombre)
-				$('.inputInterval').val(data.intervalo)
-				$('#selectNewDev option:contains('+data.tipo_disp+')').attr('selected', 'selected');
+				$('.inputInterval').val(data.intervalo / 1000)
+				$('#selectNewDev option:contains(' + data.tipo_disp + ')').attr('selected', 'selected');
 				$('.newDesc').text(data.descripcion)
 			}
 		});
@@ -539,7 +543,7 @@ $(function () {
 		});
 	})
 
-	$('.content').on('click', '.btnErase', function(){
+	$('.content').on('click', '.btnErase', function () {
 		let serial = $(this).attr('eraseId')
 		$.ajax({
 			type: "post",
@@ -549,13 +553,13 @@ $(function () {
 			},
 			success: function (res) {
 				showNotification('bottom', 'right', 'success', 'Dispositivo borrado')
-				$('.dispCard[canvasid="'+serial+'"]').remove()
+				$('.dispCard[canvasid="' + serial + '"]').remove()
 				chartList.map(chart => {
-					if(chart.canvas.id == serial){
+					if (chart.canvas.id == serial) {
 						chartList.splice(chartList.indexOf(chart), 1)
 					}
 				})
-				
+
 			}
 		});
 	})

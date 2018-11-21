@@ -160,7 +160,7 @@ $(function () {
 	}
 
 	function arrayBuffer(array, newData) {
-		if (array.length == 15) {
+		if (array.length == 25) {
 			array.shift()
 			array.push(newData)
 		} else {
@@ -288,5 +288,5 @@ $(function () {
 		}
 	}
 
-	onlyUpdater = setInterval(updateCharts, 4000)
+	onlyUpdater = setInterval(updateCharts, 1500)
 })

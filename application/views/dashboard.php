@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 	<!-- CSS Files -->
-	<link href="./assets/material-dashboard/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+	<link href="./assets/material-dashboard/assets/css/material-dashboard.min.css" rel="stylesheet" />
 	<link href="./assets/dateTimePicker/datetime.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="./assets/styles.css">
 	<title>Dashboard</title>
@@ -19,7 +19,7 @@
 
 <body id="bDashboard">
 	<div class="wrapper ">
-		<div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/material-dashboard/assets/img/sidebar-1.jpg">
+		<div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/material-dashboard/assets/img/sidebar-3.jpg">
 			<!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 

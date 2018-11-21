@@ -26,12 +26,12 @@
 									<div class="row">
 										<div class="col">
 											<div class="form-group bdm-form-group">
-												<input type="text" id="timeFrom" class="form-control text-center hFrom" data-language="es">
+												<input type="text" id="timeFrom" class="form-control text-center hFrom" data-language="es" data-position='top left'>
 											</div>
 										</div>
 										<div class="col">
 											<div class="form-group bdm-form-group">
-												<input type="text" id="timeTo" class="form-control text-center hTo" data-language="es">
+												<input type="text" id="timeTo" class="form-control text-center hTo" data-language="es" data-position='top left'>
 											</div>
 										</div>
 									</div>
@@ -51,7 +51,7 @@
 										<div class="card-body">
 											<div class="form-group bdm-form-group mt-auto mb-auto">
 												<input type="text" class="dayRange form-control text-center" data-range="true"
-												 data-multiple-dates-separator=" - " data-language="es">
+												 data-multiple-dates-separator=" - " data-language="es" data-position='top left'>
 											</div>
 										</div>
 									</div>
